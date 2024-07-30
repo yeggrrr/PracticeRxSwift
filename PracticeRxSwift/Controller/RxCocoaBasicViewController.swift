@@ -14,6 +14,7 @@ class RxCocoaBasicViewController: UIViewController, ViewRepresentable {
     let simplePickerView = UIPickerView()
     let simpleLabel = UILabel()
     let simpleTableView = UITableView()
+    let simpleSwitch = UISwitch()
     
     let disposeBag = DisposeBag()
     
@@ -25,10 +26,19 @@ class RxCocoaBasicViewController: UIViewController, ViewRepresentable {
         configureUI()
         setPickerView()
         setTableView()
+        setSwitch()
     }
     
     func addSubviews() {
-        view.addSubviews([simplePickerView, simpleLabel, simpleTableView])
+        view.addSubviews([
+            simplePickerView,
+            simpleLabel,
+            simpleTableView,
+            simpleSwitch,
+            signNameTextField,
+            signEmailTextField,
+            signButton
+        ])
     }
     
     func setConstraints() {
@@ -49,6 +59,11 @@ class RxCocoaBasicViewController: UIViewController, ViewRepresentable {
             $0.horizontalEdges.equalTo(safeArea).inset(20)
             $0.height.equalTo(150)
         }
+        
+        simpleSwitch.snp.makeConstraints {
+            $0.bottom.equalTo(safeArea).offset(-20)
+            $0.centerX.equalTo(safeArea.snp.centerX)
+        }
     }
     
     func configureUI() {
@@ -56,6 +71,7 @@ class RxCocoaBasicViewController: UIViewController, ViewRepresentable {
         simpleLabel.textAlignment = .center
         simplePickerView.backgroundColor = .systemGray
         simpleTableView.backgroundColor = .darkGray
+        simpleSwitch.onTintColor = .systemPink
     }
     
     func setPickerView() {
@@ -90,6 +106,16 @@ class RxCocoaBasicViewController: UIViewController, ViewRepresentable {
                 "\(data)를 클릭했습니다!"
             }
             .bind(to: simpleLabel.rx.text)
+            .disposed(by: disposeBag)
+    }
+    
+    func setSwitch() {
+        // Observable.just(false)
+        //     .bind(to: simpleSwitch.rx.isOn)
+        //     .disposed(by: disposeBag)
+        
+        Observable.of(false)
+            .bind(to: simpleSwitch.rx.isOn)
             .disposed(by: disposeBag)
     }
 }
