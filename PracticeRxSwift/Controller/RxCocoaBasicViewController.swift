@@ -169,4 +169,3 @@ class RxCocoaBasicViewController: UIViewController, ViewRepresentable {
             .disposed(by: disposeBag)
     }
 }
-
