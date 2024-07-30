@@ -13,6 +13,7 @@ import SnapKit
 class RxCocoaBasicViewController: UIViewController, ViewRepresentable {
     let simplePickerView = UIPickerView()
     let simpleLabel = UILabel()
+    let simpleTableView = UITableView()
     
     let disposeBag = DisposeBag()
     
@@ -23,10 +24,11 @@ class RxCocoaBasicViewController: UIViewController, ViewRepresentable {
         setConstraints()
         configureUI()
         setPickerView()
+        setTableView()
     }
     
     func addSubviews() {
-        view.addSubviews([simplePickerView, simpleLabel])
+        view.addSubviews([simplePickerView, simpleLabel, simpleTableView])
     }
     
     func setConstraints() {
@@ -41,11 +43,19 @@ class RxCocoaBasicViewController: UIViewController, ViewRepresentable {
             $0.horizontalEdges.equalTo(safeArea).inset(20)
             $0.height.equalTo(100)
         }
+        
+        simpleTableView.snp.makeConstraints {
+            $0.top.equalTo(simplePickerView.snp.bottom).offset(20)
+            $0.horizontalEdges.equalTo(safeArea).inset(20)
+            $0.height.equalTo(150)
+        }
     }
     
     func configureUI() {
         simpleLabel.backgroundColor = .systemBrown
+        simpleLabel.textAlignment = .center
         simplePickerView.backgroundColor = .systemGray
+        simpleTableView.backgroundColor = .darkGray
     }
     
     func setPickerView() {
@@ -58,6 +68,27 @@ class RxCocoaBasicViewController: UIViewController, ViewRepresentable {
         
         simplePickerView.rx.modelSelected(String.self)
             .map { $0.description }
+            .bind(to: simpleLabel.rx.text)
+            .disposed(by: disposeBag)
+    }
+    
+    func setTableView() {
+        simpleTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        
+        let items = Observable.just(["First Item", "Second Item", "Third Item"])
+        
+        items.bind(to: simpleTableView.rx.items) { (tableView, row, element) in
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")!
+            cell.backgroundColor = .darkGray
+            cell.textLabel?.text = "\(element) @ row \(row)"
+            return cell
+        }
+        .disposed(by: disposeBag)
+        
+        simpleTableView.rx.modelSelected(String.self)
+            .map { data in
+                "\(data)를 클릭했습니다!"
+            }
             .bind(to: simpleLabel.rx.text)
             .disposed(by: disposeBag)
     }
