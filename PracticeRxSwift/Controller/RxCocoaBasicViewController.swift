@@ -15,6 +15,9 @@ class RxCocoaBasicViewController: UIViewController, ViewRepresentable {
     let simpleLabel = UILabel()
     let simpleTableView = UITableView()
     let simpleSwitch = UISwitch()
+    let signNameTextField = UITextField()
+    let signEmailTextField = UITextField()
+    let signButton = UIButton()
     
     let disposeBag = DisposeBag()
     
@@ -26,6 +29,7 @@ class RxCocoaBasicViewController: UIViewController, ViewRepresentable {
         configureUI()
         setPickerView()
         setTableView()
+        setSign()
         setSwitch()
     }
     
@@ -60,6 +64,24 @@ class RxCocoaBasicViewController: UIViewController, ViewRepresentable {
             $0.height.equalTo(150)
         }
         
+        signNameTextField.snp.makeConstraints {
+            $0.top.equalTo(simpleTableView.snp.bottom).offset(20)
+            $0.horizontalEdges.equalTo(safeArea).inset(20)
+            $0.height.equalTo(50)
+        }
+        
+        signEmailTextField.snp.makeConstraints {
+            $0.top.equalTo(signNameTextField.snp.bottom).offset(20)
+            $0.horizontalEdges.equalTo(safeArea).inset(20)
+            $0.height.equalTo(50)
+        }
+        
+        signButton.snp.makeConstraints {
+            $0.top.equalTo(signEmailTextField.snp.bottom).offset(20)
+            $0.horizontalEdges.equalTo(safeArea).inset(50)
+            $0.height.equalTo(40)
+        }
+        
         simpleSwitch.snp.makeConstraints {
             $0.bottom.equalTo(safeArea).offset(-20)
             $0.centerX.equalTo(safeArea.snp.centerX)
@@ -71,6 +93,14 @@ class RxCocoaBasicViewController: UIViewController, ViewRepresentable {
         simpleLabel.textAlignment = .center
         simplePickerView.backgroundColor = .systemGray
         simpleTableView.backgroundColor = .darkGray
+        
+        signNameTextField.backgroundColor = .white
+        signNameTextField.textAlignment = .center
+        signEmailTextField.backgroundColor = .white
+        signEmailTextField.textAlignment = .center
+        signButton.backgroundColor = .systemIndigo
+        signButton.setTitle("버튼입니다. 클릭해주세요.", for: .normal)
+        
         simpleSwitch.onTintColor = .systemPink
     }
     
@@ -110,12 +140,32 @@ class RxCocoaBasicViewController: UIViewController, ViewRepresentable {
     }
     
     func setSwitch() {
-        // Observable.just(false)
-        //     .bind(to: simpleSwitch.rx.isOn)
-        //     .disposed(by: disposeBag)
-        
-        Observable.of(false)
+        Observable.of(true)
             .bind(to: simpleSwitch.rx.isOn)
+            .disposed(by: disposeBag)
+    }
+    
+    func setSign() {
+        Observable.combineLatest(signNameTextField.rx.text.orEmpty, signEmailTextField.rx.text.orEmpty) { name, email in
+            return "이름은 \(name)이고, 이메일은 \(email)입니다."
+        }
+        .bind(to: simpleLabel.rx.text)
+        .disposed(by: disposeBag)
+        
+        signNameTextField.rx.text.orEmpty
+            .map { $0.count < 4 }
+            .bind(to: signEmailTextField.rx.isHidden, signButton.rx.isHidden)
+            .disposed(by: disposeBag)
+        
+        signEmailTextField.rx.text.orEmpty
+            .map { $0.count > 4 }
+            .bind(to: signButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        signButton.rx.tap
+            .subscribe { _ in
+                self.showAlert()
+            }
             .disposed(by: disposeBag)
     }
 }
