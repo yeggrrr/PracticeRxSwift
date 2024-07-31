@@ -14,4 +14,11 @@ extension UIViewController {
         alert.addAction(okButton)
         present(alert, animated: true)
     }
+    
+    func tableViewShowAlert(message: String) {
+        let alert = UIAlertController(title: "RxExample", message: message, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "OK", style: .default)
+        alert.addAction(okButton)
+        present(alert, animated: true)
+    }
 }
