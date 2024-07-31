@@ -19,6 +19,7 @@
 		681043ED2C59396400FE354C /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681043EC2C59396400FE354C /* View+.swift */; };
 		681043F22C59490B00FE354C /* ViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681043F12C59490B00FE354C /* ViewController+.swift */; };
 		688A2CE82C594C4800B88198 /* ObservableExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688A2CE72C594C4800B88198 /* ObservableExampleViewController.swift */; };
+		688A2CEE2C5A5DBA00B88198 /* AddingNumbersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688A2CED2C5A5DBA00B88198 /* AddingNumbersViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		681043EC2C59396400FE354C /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 		681043F12C59490B00FE354C /* ViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+.swift"; sourceTree = "<group>"; };
 		688A2CE72C594C4800B88198 /* ObservableExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableExampleViewController.swift; sourceTree = "<group>"; };
+		688A2CED2C5A5DBA00B88198 /* AddingNumbersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingNumbersViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 			children = (
 				681043D22C590AF600FE354C /* RxCocoaBasicViewController.swift */,
 				688A2CE72C594C4800B88198 /* ObservableExampleViewController.swift */,
+				688A2CED2C5A5DBA00B88198 /* AddingNumbersViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -187,6 +190,7 @@
 			files = (
 				688A2CE82C594C4800B88198 /* ObservableExampleViewController.swift in Sources */,
 				681043F22C59490B00FE354C /* ViewController+.swift in Sources */,
+				688A2CEE2C5A5DBA00B88198 /* AddingNumbersViewController.swift in Sources */,
 				681043D32C590AF600FE354C /* RxCocoaBasicViewController.swift in Sources */,
 				681043EB2C5938CF00FE354C /* ViewRepresentable.swift in Sources */,
 				681043CF2C590AF600FE354C /* AppDelegate.swift in Sources */,
