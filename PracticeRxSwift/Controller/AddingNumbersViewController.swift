@@ -10,14 +10,14 @@ import RxSwift
 import RxCocoa
 import SnapKit
 
-class AddingNumbersViewController: UIViewController, ViewRepresentable {
-    let number1 = UITextField()
-    let number2 = UITextField()
-    let number3 = UITextField()
-    let plusLabel = UILabel()
-    let resultLabel = UILabel()
+final class AddingNumbersViewController: UIViewController, ViewRepresentable {
+    private let number1 = UITextField()
+    private let number2 = UITextField()
+    private let number3 = UITextField()
+    private let plusLabel = UILabel()
+    private let resultLabel = UILabel()
     
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,7 +84,7 @@ class AddingNumbersViewController: UIViewController, ViewRepresentable {
         resultLabel.backgroundColor = .systemGray4
     }
     
-    func calculator() {
+    private func calculator() {
         Observable.combineLatest(
             number1.rx.text.orEmpty,
             number2.rx.text.orEmpty,
